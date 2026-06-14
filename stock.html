@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<title>Green Angan Admin Panel</title>
+<style>
+body {
+    margin: 0; font-family: Arial, sans-serif;
+    background: url('https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=1200') center/cover no-repeat fixed;
+    display: flex; justify-content: center; align-items: center; min-height: 100vh;
+}
+.login-box, .panel {
+    width: 90%; max-width: 900px; background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.3); padding: 30px; border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25); color: white; text-align: center; box-sizing: border-box;
+}
+.panel { display: none; }
+input {
+    width: 80%; max-width: 300px; display: block; margin: 10px auto; padding: 12px 15px;
+    background: rgba(255, 255, 255, 0.2); border: 1px solid rgba(255, 255, 255, 0.4);
+    color: white; font-size: 16px; border-radius: 30px; outline: none;
+}
+input::placeholder { color: rgba(255, 255, 255, 0.8); }
+.camera-label {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 60px; height: 60px; background: rgba(255, 255, 255, 0.2);
+    border: 2px dashed rgba(255, 255, 255, 0.6); border-radius: 50%; cursor: pointer; margin: 15px auto;
+}
+.camera-label svg { width: 30px; height: 30px; fill: white; }
+#newImageFile { display: none; }
+button {
+    width: 80%; max-width: 300px; display: block; margin: 15px auto; padding: 12px;
+    background: #198754; color: white; border: none; border-radius: 30px; cursor: pointer; font-weight: bold;
+}
+.products { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 20px; }
+.card { background: rgba(255, 255, 255, 0.9); padding: 20px; border-radius: 15px; text-align: center; color: #333; }
+.card img { width: 100%; height: 180px; object-fit: cover; border-radius: 10px; margin-bottom: 10px; }
+.stock-display { font-size: 18px; font-weight: bold; color: #198754; margin: 10px 0; }
+.card input { color: #333; background: rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.2); width: 80%; }
+.qty-actions { display: flex; justify-content: center; gap: 10px; }
+.qty-actions button { width: 45%; padding: 8px; font-size: 14px; }
+.btn-danger { background: #dc3545; }
+.btn-secondary { background: #6c757d; }
+</style>
+</head>
+<body>
+
+<div class="login-box" id="loginBox">
+    <h2>Stock Login</h2>
+    <input type="password" id="password" placeholder="Enter Password">
+    <button onclick="login()">Login</button>
+</div>
+
+<div class="panel" id="panel">
+    <div style="text-align: left;"><button onclick="window.location.href='index.html'" style="max-width: 150px; background: #6c757d;">⬅️ Home Page</button></div>
+    <h2>Stock Management</h2>
+    <hr>
+    <h3>Add New Product</h3>
+    <input type="text" id="newName" placeholder="Product Name">
+    <input type="number" id="newPrice" placeholder="Price (₹)">
+    <input type="number" id="newStock" placeholder="Initial Stock">
+    
+    <label class="camera-label">
+        <svg viewBox="0 0 24 24"><path d="M4 4h3l2-2h6l2 2h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m8 3a5 5 0 0 0-5 5 5 5 0 0 0 5 5 5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 2a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3z"/></svg>
+        <input type="file" id="newImageFile" accept="image/*" capture="environment">
+    </label>
+    <div>Click Camera to upload image</div>
+    <button onclick="addProduct()">➕ Add Product</button>
+    <hr>
+    <div class="products" id="products"></div>
+</div>
+
+<script>
+const ADMIN_PASSWORD = "12345";
+let products = JSON.parse(localStorage.getItem("green_angan_products")) || [];
+
+function login() {
+    if (document.getElementById("password").value === ADMIN_PASSWORD) {
+        document.getElementById("loginBox").style.display = "none";
+        document.getElementById("panel").style.display = "block";
+        loadProducts();
+    } else { alert("Wrong Password"); }
+}
+
+function loadProducts() {
+    let html = "";
+    products.forEach((product, index) => {
+        html += `
+        <div class="card">
+            <img src="${product.image || 'https://via.placeholder.com/180'}">
+            <h3>${product.name}</h3>
+            <p><b>Price: ₹${product.price}</b></p>
+            <div class="stock-display">Current Stock: ${product.stock}</div>
+            <input type="number" id="qty-${index}" placeholder="Quantity" min="1">
+            <div class="qty-actions">
+                <button onclick="updateStock(${index}, 'add')">➕ Add</button>
+                <button onclick="updateStock(${index}, 'less')" class="btn-secondary">➖ Less</button>
+            </div>
+            <button onclick="deleteProduct(${index})" class="btn-danger" style="margin-top:10px;">🗑 Delete</button>
+        </div>`;
+    });
+    document.getElementById("products").innerHTML = html || "<p>No products yet.</p>";
+}
+
+function addProduct() {
+    let name = document.getElementById("newName").value.trim();
+    let price = parseInt(document.getElementById("newPrice").value);
+    let stockQty = parseInt(document.getElementById("newStock").value);
+    let file = document.getElementById("newImageFile").files[0];
+
+    if (!name || isNaN(price) || isNaN(stockQty) || !file) {
+        alert("कृपया फोटो सहित सभी फील्ड भरें।"); return;
+    }
+
+    let reader = new FileReader();
+    reader.onload = function(e) {
+        products.push({ name: name, price: price, stock: stockQty, image: e.target.result });
+        localStorage.setItem("green_angan_products", JSON.stringify(products));
+        alert("Product Added Successfully!");
+        document.getElementById("newName").value = "";
+        document.getElementById("newPrice").value = "";
+        document.getElementById("newStock").value = "";
+        document.getElementById("newImageFile").value = "";
+        loadProducts();
+    };
+    reader.readAsDataURL(file);
+}
+
+function updateStock(index, action) {
+    let qty = parseInt(document.getElementById("qty-" + index).value);
+    if (!qty || qty <= 0) { alert("Enter Valid Quantity"); return; }
+    
+    if (action === 'add') {
+        products[index].stock += qty;
+    } else {
+        if (products[index].stock - qty < 0) { alert("Stock cannot be negative!"); return; }
+        products[index].stock -= qty;
+    }
+    localStorage.setItem("green_angan_products", JSON.stringify(products));
+    loadProducts();
+}
+
+function deleteProduct(index) {
+    if (confirm("Delete this product?")) {
+        products.splice(index, 1);
+        localStorage.setItem("green_angan_products", JSON.stringify(products));
+        loadProducts();
+    }
+}
+</script>
+</body>
+</html>

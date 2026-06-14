@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Green Angan</title>
+<style>
+*{ margin:0; padding:0; box-sizing:border-box; font-family:Arial,sans-serif; }
+body{ background:#f2f8f3; }
+.navbar{ background:#0b6e4f; color:white; display:flex; align-items:center; padding:10px 20px; gap:20px; }
+.logo{ font-size:28px; font-weight:bold; }
+.search-box{ flex:1; display:flex; }
+.search-box input{ width:100%; padding:10px; border:none; outline:none; border-radius:5px 0 0 5px; }
+.search-box button{ padding:10px 15px; border:none; background:#198754; color:white; cursor:pointer; }
+.nav-links{ display:flex; gap:20px; }
+.nav-links span{ cursor:pointer; font-weight:bold; }
+.hero{ background:url('https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=1200') center/cover; height:300px; display:flex; justify-content:center; align-items:flex-end; }
+.hero-text{ background:#0b6e4f; color:white; padding:12px 25px; margin-bottom:20px; border-radius:8px; }
+.products{ display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:20px; padding:20px; }
+.card{ background:white; padding:15px; border-radius:10px; text-align:center; box-shadow:0 2px 10px rgba(0,0,0,0.1); }
+.card img{ width:100%; height:200px; object-fit:cover; border-radius:8px; }
+.card h3{ margin:10px 0; color:#0b6e4f; }
+.card p{ margin-bottom:5px; font-weight:bold; }
+.stock-info { font-size: 14px; color: #198754; margin-bottom: 10px; font-weight: bold; }
+.card button{ width:100%; padding:10px; background:#198754; color:white; border:none; border-radius:5px; cursor:pointer; font-weight: bold; }
+.out-of-stock { background: #6c757d !important; cursor: not-allowed !important; }
+.payment-section{ display:none; background:white; margin:20px; padding:20px; border-radius:10px; box-shadow:0 2px 10px rgba(0,0,0,0.1); }
+.payment-section h2{ color:#0b6e4f; margin-bottom:15px; }
+.cart-item{ display:flex; justify-content:space-between; padding:10px; border-bottom:1px solid #ddd; font-size: 15px; }
+.total{ margin-top:15px; font-size:20px; font-weight:bold; color:#0b6e4f; margin-bottom: 15px; }
+.customer-details-box { background: #f9f9f9; padding: 15px; border-radius: 8px; border: 1px solid #ddd; margin-top: 15px; text-align: left; }
+.customer-details-box h3 { color: #0b6e4f; margin-bottom: 10px; font-size: 16px; }
+.customer-details-box input, .customer-details-box textarea { width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 5px; outline: none; }
+.customer-details-box textarea { resize: none; height: 60px; }
+.pay-btn{ margin-top:15px; width:100%; padding:12px; border:none; background:#198754; color:white; border-radius:5px; cursor:pointer; font-size:16px; font-weight: bold; }
+footer{ background:#0b6e4f; color:white; text-align:center; padding:20px; margin-top:20px; }
+</style>
+</head>
+<body>
+
+<div class="navbar">
+    <div class="logo">Green Angan</div>
+    <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Search Products" onkeyup="searchProducts()">
+        <button onclick="searchProducts()">Search</button>
+    </div>
+    <div class="nav-links">
+        <span onclick="window.location.href='index.html'">Home🏠</span>
+        <span onclick="window.location.href='order.html'">Orders🚚</span>
+        <span onclick="window.location.href='stock.html'">📦 Stock</span>
+        <span onclick="openCart()">🛒Cart</span>
+    </div>
+</div>
+
+<div class="hero">
+    <div class="hero-text">Where Homes Bloom with Life</div>
+</div>
+
+<div class="products" id="productsContainer"></div>
+
+<div class="payment-section" id="cartSection">
+    <h2>Your Cart</h2>
+    <div id="cartItems"><p>No products added.</p></div>
+    <div class="total">Total: ₹<span id="totalPrice">0</span></div>
+
+    <div class="customer-details-box">
+        <h3>🚚 Delivery Address Details</h3>
+        <input type="text" id="customerName" placeholder="Full Name">
+        <input type="number" id="customerPhone" placeholder="Mobile Number">
+        <textarea id="customerAddress" placeholder="Complete Delivery Address"></textarea>
+    </div>
+    <button class="pay-btn" onclick="payNow()">Proceed To Pay</button>
+</div>
+
+<div style="padding:20px;background:white;text-align:center;margin-top:20px;">
+    <h2>📍 Our Location</h2>
+    <iframe src="https://www.google.com/maps?q=haryana,baragoan&output=embed" width="100%" height="350" style="border:0;border-radius:10px;" loading="lazy"></iframe>
+    <h3 style="margin-top:15px;">Green Angan</h3>
+    <p>📍 Haryana, baragoan,132023</p>
+    <p>📞 +91 99966 56004</p>
+    <p>✉ greenangan@gmail.com</p>
+</div>
+
+<footer>© 2026 Green Angan | Where Homes Bloom with Life</footer>
+<a href="https://wa.me/919996656004" target="_blank" style="position:fixed; bottom:20px; right:20px; background:#25D366; color:white; padding:15px; border-radius:50%; font-size:24px; text-decoration:none; z-index:9999;">💬</a>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+const defaultProducts = [
+    { name: "Organic Wheat", price: 50, stock: 100, image: "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=500" },
+    { name: "Organic Seeds", price: 120, stock: 80, image: "https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=500" },
+    { name: "Organic Jaggery", price: 80, stock: 60, image: "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?w=500" },
+    { name: "Pure Honey", price: 250, stock: 40, image: "https://images.unsplash.com/photo-1587049352851-8d4e89133924?w=500" },
+    { name: "Vermicompost", price: 350, stock: 30, image: "https://images.unsplash.com/photo-1592982537447-7440770cbfc9?w=500" },
+    { name: "Organic Fertilizer", price: 450, stock: 25, image: "https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?w=500" }
+];
+
+let products = JSON.parse(localStorage.getItem("green_angan_products")) || defaultProducts;
+let cart = [];
+let total = 0;
+
+function renderProducts() {
+    let container = document.getElementById("productsContainer");
+    let html = "";
+    products.forEach((product, index) => {
+        html += `
+        <div class="card">
+            <img src="${product.image}" alt="${product.name}">
+            <h3>${product.name}</h3>
+            <p>₹${product.price}</p>
+            <div class="stock-info">Available Stock: ${product.stock}</div>
+            ${product.stock > 0 ? `<button onclick="addToCart(${index})">Add To Cart</button>` : `<button class="out-of-stock" disabled>Out Of Stock</button>`}
+        </div>`;
+    });
+    container.innerHTML = html;
+}
+window.onload = renderProducts;
+
+function addToCart(index) {
+    let product = products[index];
+    if (product.stock <= 0) { alert("Out Of Stock"); return; }
+    product.stock--;
+    localStorage.setItem("green_angan_products", JSON.stringify(products));
+    renderProducts();
+
+    // चेक करें कि क्या आइटम पहले से कार्ट में है
+    let existingItem = cart.find(item => item.name === product.name);
+    if (existingItem) {
+        existingItem.qty++;
+    } else {
+        cart.push({ name: product.name, price: product.price, qty: 1 });
+    }
+    total += product.price;
+    updateCart();
+}
+
+function updateCart() {
+    let cartItems = document.getElementById("cartItems");
+    if (cart.length === 0) {
+        cartItems.innerHTML = "<p>No products added.</p>";
+    } else {
+        cartItems.innerHTML = "";
+        cart.forEach(item => {
+            cartItems.innerHTML += `<div class="cart-item"><span>${item.name} (x${item.qty})</span><span>₹${item.price * item.qty}</span></div>`;
+        });
+    }
+    document.getElementById("totalPrice").innerText = total;
+}
+
+function openCart() {
+    let cartSection = document.getElementById("cartSection");
+    cartSection.style.display = (cartSection.style.display === "none" || cartSection.style.display === "") ? "block" : "none";
+    if(cartSection.style.display === "block") cartSection.scrollIntoView({ behavior: "smooth" });
+}
+
+function payNow() {
+    let name = document.getElementById("customerName").value.trim();
+    let phone = document.getElementById("customerPhone").value.trim();
+    let address = document.getElementById("customerAddress").value.trim();
+
+    if(name === "" || phone === "" || address === ""){ alert("Please fill details."); return; }
+    if (total === 0) { alert("Cart is empty."); return; }
+
+    var options = {
+        key: "rzp_test_T0CZpcOudkdpIx",
+        amount: total * 100,
+        currency: "INR",
+        name: "Green Angan",
+        description: "Order Payment",
+        handler: function(response){
+            
+            // 📦 हर प्रोडक्ट की क्वांटिटी और रेट का पूरा विवरण बनाना
+            let itemsDetails = cart.map(item => `${item.name} [Qty: ${item.qty}] (₹${item.price}/each)`).join(", ");
+
+            let orderData = {
+                orderId: "GA-" + Math.floor(100000 + Math.random() * 900000),
+                customerName: name,
+                customerPhone: phone,
+                customerAddress: address,
+                items: itemsDetails, // यहाँ पूरी लिस्ट सेव होगी मात्रा के साथ
+                totalAmount: total,
+                paymentId: response.razorpay_payment_id,
+                status: "Order Placed / Processing",
+                date: new Date().toLocaleString()
+            };
+
+            let existingOrders = JSON.parse(localStorage.getItem("green_angan_orders")) || [];
+            existingOrders.unshift(orderData);
+            localStorage.setItem("green_angan_orders", JSON.stringify(existingOrders));
+
+            cart = []; total = 0; updateCart();
+            document.getElementById("customerName").value = "";
+            document.getElementById("customerPhone").value = "";
+            document.getElementById("customerAddress").value = "";
+            document.getElementById("cartSection").style.display = "none";
+            alert("Order Success! Tracking updated.");
+        },
+        theme: { color: "#198754" }
+    };
+    new Razorpay(options).open();
+}
+
+function searchProducts() {
+    let input = document.getElementById("searchInput").value.toLowerCase().trim();
+    document.querySelectorAll(".card").forEach(card => {
+        let name = card.querySelector("h3").textContent.toLowerCase();
+        card.style.display = name.includes(input) ? "" : "none";
+    });
+}
+</script>
+</body>
+</html>

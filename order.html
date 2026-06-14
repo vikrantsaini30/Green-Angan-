@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Track Orders - Green Angan</title>
+<style>
+    body { font-family: Arial, sans-serif; background: #f2f8f3; margin: 0; padding: 20px; }
+    .navbar { background: #0b6e4f; color: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border-radius: 5px; margin-bottom: 20px; }
+    .navbar h1 { margin: 0; font-size: 24px; }
+    .nav-links span { cursor: pointer; font-weight: bold; margin-left: 15px; }
+    
+    .login-box { max-width: 400px; margin: 100px auto; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center; }
+    .login-box h2 { color: #0b6e4f; margin-bottom: 20px; }
+    .login-box input { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 25px; outline: none; font-size: 16px; text-align: center; box-sizing: border-box; }
+    .login-box button { width: 100%; padding: 12px; background: #198754; color: white; border: none; border-radius: 25px; cursor: pointer; font-size: 16px; font-weight: bold; }
+
+    .container { max-width: 900px; margin: 0 auto; background: white; padding: 25px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); display: none; }
+    h2 { color: #0b6e4f; border-bottom: 2px solid #0b6e4f; padding-bottom: 10px; }
+    .order-card { background: #fafafa; border: 1px solid #ddd; padding: 15px; border-radius: 8px; margin-bottom: 15px; }
+    .order-header { display: flex; justify-content: space-between; font-weight: bold; color: #0b6e4f; border-bottom: 1px dashed #ccc; padding-bottom: 5px; margin-bottom: 10px; }
+    .status-badge { background: #198754; color: white; padding: 3px 8px; border-radius: 4px; font-size: 12px; }
+    p { margin: 5px 0; font-size: 14px; color: #333; }
+    .items-list { background: #eef7f2; padding: 8px 12px; border-left: 4px solid #0b6e4f; margin: 10px 0; font-weight: bold; color: #0b6e4f; border-radius: 4px; }
+    .status-select { padding: 5px; border-radius: 4px; border: 1px solid #ccc; background: white; margin-top: 5px; cursor: pointer; }
+    .delete-btn { background: #dc3545; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; float: right; font-size: 12px; margin-top: -5px; }
+</style>
+</head>
+<body>
+
+<div class="navbar">
+    <h1>Green Angan - Order Tracking</h1>
+    <div class="nav-links">
+        <span onclick="window.location.href='index.html'">Home 🏠</span>
+        <span onclick="window.location.href='stock.html'">Stock 📦</span>
+    </div>
+</div>
+
+<div class="login-box" id="loginBox">
+    <h2>Admin Verification</h2>
+    <input type="password" id="adminPassword" placeholder="Enter Admin Password">
+    <button onclick="checkPassword()">Verify & Access</button>
+</div>
+
+<div class="container" id="orderPanel">
+    <h2>🚚 All Placed Orders (Detailed Bill)</h2>
+    <div id="ordersContainer"><p>No orders found yet.</p></div>
+</div>
+
+<script>
+    const ADMIN_PASSWORD = "12345"; 
+
+    function checkPassword() {
+        let enteredPass = document.getElementById("adminPassword").value;
+        if(enteredPass === ADMIN_PASSWORD) {
+            document.getElementById("loginBox").style.display = "none";
+            document.getElementById("orderPanel").style.display = "block";
+            loadOrders();
+        } else {
+            alert("Wrong Password!");
+        }
+    }
+
+    function loadOrders() {
+        let ordersContainer = document.getElementById("ordersContainer");
+        let orders = JSON.parse(localStorage.getItem("green_angan_orders")) || [];
+
+        if(orders.length === 0) {
+            ordersContainer.innerHTML = "<p style='text-align:center; color:#777;'>अभी तक कोई ऑर्डर नहीं आया है।</p>";
+            return;
+        }
+
+        let html = "";
+        orders.forEach((order, index) => {
+            html += `
+            <div class="order-card">
+                <div class="order-header">
+                    <span>Order ID: ${order.orderId}</span>
+                    <span class="status-badge" id="badge-${index}">${order.status}</span>
+                </div>
+                <button class="delete-btn" onclick="deleteOrder(${index})">🗑 Remove</button>
+                <p><b>Date & Time:</b> ${order.date}</p>
+                <p><b>Customer:</b> ${order.customerName} (${order.customerPhone})</p>
+                <p><b>Address:</b> ${order.customerAddress}</p>
+                
+                <!-- 🛒 यहाँ क्वांटिटी और सामान की पूरी जानकारी दिखेगी -->
+                <div class="items-list">📦 Ordered Items: ${order.items}</div>
+                
+                <p><b>Total Amount Paid:</b> <span style="font-size:16px; color:#198754; font-weight:bold;">₹${order.totalAmount}</span></p>
+                <p style="font-size:11px; color:#888;"><b>Payment ID:</b> ${order.paymentId}</p>
+                
+                <div style="margin-top: 10px; border-top: 1px solid #eee; padding-top: 8px;">
+                    <label style="font-size: 13px; font-weight: bold;">Status: </label>
+                    <select class="status-select" onchange="updateStatus(${index}, this.value)">
+                        <option value="Order Placed / Processing" ${order.status === 'Order Placed / Processing' ? 'selected' : ''}>Processing ⏳</option>
+                        <option value="Shipped Out" ${order.status === 'Shipped Out' ? 'selected' : ''}>Shipped 🚚</option>
+                        <option value="Delivered Successfully" ${order.status === 'Delivered Successfully' ? 'selected' : ''}>Delivered ✅</option>
+                        <option value="Cancelled" ${order.status === 'Cancelled' ? 'selected' : ''}>Cancelled ❌</option>
+                    </select>
+                </div>
+            </div>`;
+        });
+        ordersContainer.innerHTML = html;
+    }
+
+    function updateStatus(index, newStatus) {
+        let orders = JSON.parse(localStorage.getItem("green_angan_orders")) || [];
+        orders[index].status = newStatus;
+        localStorage.setItem("green_angan_orders", JSON.stringify(orders));
+        document.getElementById(`badge-${index}`).innerText = newStatus;
+    }
+
+    function deleteOrder(index) {
+        if(confirm("Delete this order record?")) {
+            let orders = JSON.parse(localStorage.getItem("green_angan_orders")) || [];
+            orders.splice(index, 1);
+            localStorage.setItem("green_angan_orders", JSON.stringify(orders));
+            loadOrders();
+        }
+    }
+</script>
+</body>
+</html>
