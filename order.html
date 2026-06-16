@@ -5,46 +5,97 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Track Orders - Green Angan</title>
 <style>
-    body { font-family: Arial, sans-serif; background: #f2f8f3; margin: 0; padding: 20px; }
-    .navbar { background: #0b6e4f; color: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border-radius: 5px; margin-bottom: 20px; }
-    .navbar h1 { margin: 0; font-size: 24px; }
-    .nav-links span { cursor: pointer; font-weight: bold; margin-left: 15px; }
-    
-    .login-box { max-width: 400px; margin: 100px auto; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center; }
-    .login-box h2 { color: #0b6e4f; margin-bottom: 20px; }
-    .login-box input { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 25px; outline: none; font-size: 16px; text-align: center; box-sizing: border-box; }
-    .login-box button { width: 100%; padding: 12px; background: #198754; color: white; border: none; border-radius: 25px; cursor: pointer; font-size: 16px; font-weight: bold; }
+:root {
+    --royal-green: #0b4d3a;
+    --light-green: #147a5b;
+    --bg-light: #f6f9f7;
+    --text-dark: #2d3748;
+}
 
-    .container { max-width: 900px; margin: 0 auto; background: white; padding: 25px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); display: none; }
-    h2 { color: #0b6e4f; border-bottom: 2px solid #0b6e4f; padding-bottom: 10px; }
-    .order-card { background: #fafafa; border: 1px solid #ddd; padding: 15px; border-radius: 8px; margin-bottom: 15px; }
-    .order-header { display: flex; justify-content: space-between; font-weight: bold; color: #0b6e4f; border-bottom: 1px dashed #ccc; padding-bottom: 5px; margin-bottom: 10px; }
-    .status-badge { background: #198754; color: white; padding: 3px 8px; border-radius: 4px; font-size: 12px; }
-    p { margin: 5px 0; font-size: 14px; color: #333; }
-    .items-list { background: #eef7f2; padding: 8px 12px; border-left: 4px solid #0b6e4f; margin: 10px 0; font-weight: bold; color: #0b6e4f; border-radius: 4px; }
-    .status-select { padding: 5px; border-radius: 4px; border: 1px solid #ccc; background: white; margin-top: 5px; cursor: pointer; }
-    .delete-btn { background: #dc3545; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; float: right; font-size: 12px; margin-top: -5px; }
+*{ margin:0; padding:0; box-sizing:border-box; font-family: 'Segoe UI', Roboto, sans-serif; }
+body { background: var(--bg-light); color: var(--text-dark); padding-bottom: 80px; }
+
+/* Premium Top Navbar */
+.navbar { 
+    background: white; 
+    padding: 15px 20px; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+}
+.navbar h1 { margin: 0; font-size: 20px; color: var(--royal-green); font-weight: 800; }
+.nav-links span { cursor: pointer; font-weight: 700; margin-left: 15px; font-size: 14px; color: var(--light-green); }
+
+/* Admin Verification Form */
+.login-box { max-width: 400px; margin: 60px auto; background: white; padding: 30px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); text-align: center; border: 1px solid #edf2f7; }
+.login-box h2 { color: var(--royal-green); margin-bottom: 20px; font-size: 22px; font-weight: 700; }
+.login-box input { width: 100%; padding: 14px; margin-bottom: 15px; border: 1px solid #cbd5e0; border-radius: 30px; outline: none; font-size: 15px; text-align: center; background: #f7fafc; }
+.login-box button { width: 100%; padding: 14px; background: var(--royal-green); color: white; border: none; border-radius: 30px; cursor: pointer; font-size: 16px; font-weight: 700; transition: 0.2s; }
+.login-box button:hover { background: var(--light-green); }
+
+/* Orders Dashboard Panel */
+.container { max-width: 700px; margin: 20px auto; padding: 0 15px; display: none; }
+h2 { color: var(--royal-green); font-size: 20px; font-weight: 800; margin-bottom: 15px; border-left: 4px solid var(--royal-green); padding-left: 10px; }
+
+.order-card { background: white; border: 1px solid #edf2f7; padding: 18px; border-radius: 12px; margin-bottom: 15px; box-shadow: 0 3px 10px rgba(0,0,0,0.03); position: relative; }
+.order-header { display: flex; justify-content: space-between; align-items: center; font-weight: 700; color: var(--royal-green); border-bottom: 1px dashed #e2e8f0; padding-bottom: 10px; margin-bottom: 12px; font-size: 14px; }
+.status-badge { background: #eefaf4; color: #2f855a; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; border: 1px solid #c6f6d5; }
+
+p { margin: 6px 0; font-size: 13.5px; color: #4a5568; line-height: 1.4; }
+p b { color: #1a202c; }
+
+.items-list { background: #f0faf6; padding: 10px 14px; border-left: 4px solid var(--royal-green); margin: 12px 0; font-weight: 700; color: var(--royal-green); border-radius: 4px; font-size: 13px; }
+.delete-btn { background: #fff5f5; color: #e53e3e; border: 1px solid #fed7d7; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 700; position: absolute; right: 18px; bottom: 18px; }
+
+/* Status Modifier Dropdown */
+.status-control { margin-top: 12px; border-top: 1px solid #edf2f7; padding-top: 12px; display: flex; align-items: center; gap: 8px; }
+.status-control label { font-size: 13px; font-weight: 700; color: #4a5568; }
+.status-select { padding: 6px 12px; border-radius: 6px; border: 1px solid #cbd5e0; background: white; font-size: 13px; cursor: pointer; font-weight: 600; color: var(--text-dark); outline: none; }
+
+/* Sticky Bottom App Bar */
+.bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: white; display: flex; justify-content: space-around; padding: 10px 0; box-shadow: 0 -2px 10px rgba(0,0,0,0.08); z-index: 1000; }
+.nav-item { display: flex; flex-direction: column; align-items: center; font-size: 11px; font-weight: 600; color: #718096; cursor: pointer; }
+.nav-item.active { color: var(--royal-green); }
+.nav-icon { font-size: 20px; margin-bottom: 2px; }
 </style>
 </head>
 <body>
 
 <div class="navbar">
-    <h1>Green Angan - Order Tracking</h1>
+    <h1>Green Angan Dashboard</h1>
     <div class="nav-links">
-        <span onclick="window.location.href='index.html'">Home 🏠</span>
-        <span onclick="window.location.href='stock.html'">Stock 📦</span>
+        <span onclick="window.location.href='index.html'">Shop 🛒</span>
     </div>
 </div>
 
+<!-- Password Portal -->
 <div class="login-box" id="loginBox">
     <h2>Admin Verification</h2>
     <input type="password" id="adminPassword" placeholder="Enter Admin Password">
     <button onclick="checkPassword()">Verify & Access</button>
 </div>
 
+<!-- Orders Showcase Panel -->
 <div class="container" id="orderPanel">
-    <h2>🚚 All Placed Orders (Detailed Bill)</h2>
-    <div id="ordersContainer"><p>No orders found yet.</p></div>
+    <h2>🚚 Live Customer Orders</h2>
+    <div id="ordersContainer"><p style="text-align:center; color:#a0aec0; padding:20px;">No orders found yet.</p></div>
+</div>
+
+<!-- Sticky Bottom Menu -->
+<div class="bottom-nav">
+    <div class="nav-item" onclick="window.location.href='index.html'">
+        <span class="nav-icon">🏠</span>
+        <span>Home</span>
+    </div>
+    <div class="nav-item active" onclick="window.location.href='order.html'">
+        <span class="nav-icon">🚚</span>
+        <span>Orders</span>
+    </div>
+    <div class="nav-item" onclick="window.location.href='stock.html'">
+        <span class="nav-icon">📦</span>
+        <span>Stock</span>
+    </div>
 </div>
 
 <script>
@@ -66,7 +117,7 @@
         let orders = JSON.parse(localStorage.getItem("green_angan_orders")) || [];
 
         if(orders.length === 0) {
-            ordersContainer.innerHTML = "<p style='text-align:center; color:#777;'>अभी तक कोई ऑर्डर नहीं आया है।</p>";
+            ordersContainer.innerHTML = "<p style='text-align:center; color:#718096; padding: 30px; font-weight:600;'>अभी तक कोई नया ऑर्डर प्राप्त नहीं हुआ है।</p>";
             return;
         }
 
@@ -75,22 +126,20 @@
             html += `
             <div class="order-card">
                 <div class="order-header">
-                    <span>Order ID: ${order.orderId}</span>
+                    <span>ID: ${order.orderId}</span>
                     <span class="status-badge" id="badge-${index}">${order.status}</span>
                 </div>
-                <button class="delete-btn" onclick="deleteOrder(${index})">🗑 Remove</button>
-                <p><b>Date & Time:</b> ${order.date}</p>
+                <p><b>Date:</b> ${order.date}</p>
                 <p><b>Customer:</b> ${order.customerName} (${order.customerPhone})</p>
                 <p><b>Address:</b> ${order.customerAddress}</p>
                 
-                <!-- 🛒 यहाँ क्वांटिटी और सामान की पूरी जानकारी दिखेगी -->
-                <div class="items-list">📦 Ordered Items: ${order.items}</div>
+                <div class="items-list">📦 Items: ${order.items}</div>
                 
-                <p><b>Total Amount Paid:</b> <span style="font-size:16px; color:#198754; font-weight:bold;">₹${order.totalAmount}</span></p>
-                <p style="font-size:11px; color:#888;"><b>Payment ID:</b> ${order.paymentId}</p>
+                <p><b>Total Amount Paid:</b> <span style="font-size:16px; color:#38a169; font-weight:bold;">₹${order.totalAmount}</span></p>
+                <p style="font-size:11px; color:#a0aec0; margin-top:4px;"><b>Payment ID:</b> ${order.paymentId}</p>
                 
-                <div style="margin-top: 10px; border-top: 1px solid #eee; padding-top: 8px;">
-                    <label style="font-size: 13px; font-weight: bold;">Status: </label>
+                <div class="status-control">
+                    <label>Update Status: </label>
                     <select class="status-select" onchange="updateStatus(${index}, this.value)">
                         <option value="Order Placed / Processing" ${order.status === 'Order Placed / Processing' ? 'selected' : ''}>Processing ⏳</option>
                         <option value="Shipped Out" ${order.status === 'Shipped Out' ? 'selected' : ''}>Shipped 🚚</option>
@@ -98,6 +147,7 @@
                         <option value="Cancelled" ${order.status === 'Cancelled' ? 'selected' : ''}>Cancelled ❌</option>
                     </select>
                 </div>
+                <button class="delete-btn" onclick="deleteOrder(${index})">🗑 Remove</button>
             </div>`;
         });
         ordersContainer.innerHTML = html;
@@ -111,7 +161,7 @@
     }
 
     function deleteOrder(index) {
-        if(confirm("Delete this order record?")) {
+        if(confirm("Delete this order record permanently?")) {
             let orders = JSON.parse(localStorage.getItem("green_angan_orders")) || [];
             orders.splice(index, 1);
             localStorage.setItem("green_angan_orders", JSON.stringify(orders));
