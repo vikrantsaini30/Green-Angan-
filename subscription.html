@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Premium Membership - Green Angan</title>
+<style>
+:root {
+    --royal-green: #0b4d3a;
+    --light-green: #147a5b;
+    --angan-yellow: #ffd814;
+    --angan-orange: #f7a200;
+    --bg-light: #f6f9f7;
+    --text-dark: #2d3748;
+}
+
+*{ margin:0; padding:0; box-sizing:border-box; font-family: 'Segoe UI', Roboto, sans-serif; }
+body{ background: var(--bg-light); color: var(--text-dark); padding: 30px 15px; }
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.header {
+    margin-bottom: 40px;
+}
+
+.back-btn {
+    display: inline-block;
+    margin-bottom: 15px;
+    color: var(--royal-green);
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 15px;
+}
+
+h1 {
+    color: var(--royal-green);
+    font-size: 28px;
+    font-weight: 800;
+}
+
+.subtitle {
+    font-size: 15px;
+    color: #718096;
+    margin-top: 5px;
+}
+
+/* 3 Plans Grid Style */
+.plans-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    margin-top: 20px;
+}
+
+.plan-card {
+    background: white;
+    border: 1px solid #edf2f7;
+    padding: 30px 20px;
+    border-radius: 16px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.plan-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+/* Standard/Best Value Card Highlighting */
+.plan-card.popular {
+    border: 2px solid var(--angan-orange);
+    background: #fffdf2;
+}
+
+.badge {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--angan-orange);
+    color: black;
+    font-size: 11px;
+    font-weight: 800;
+    padding: 3px 12px;
+    border-radius: 20px;
+}
+
+h3 {
+    color: var(--royal-green);
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.price {
+    font-size: 36px;
+    font-weight: 800;
+    color: #1a202c;
+    margin: 15px 0;
+}
+
+.price span {
+    font-size: 16px;
+    text-decoration: line-through;
+    color: #a0aec0;
+    font-weight: normal;
+}
+
+.duration {
+    font-size: 13px;
+    color: #718096;
+    margin-bottom: 20px;
+}
+
+/* Benefits/Advice Style */
+.benefits {
+    text-align: left;
+    margin: 20px 0;
+    list-style: none;
+    flex-grow: 1;
+}
+
+.benefits li {
+    padding: 8px 0;
+    font-size: 14px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    color: #4a5568;
+}
+
+.check-icon {
+    color: #38a169;
+    font-weight: bold;
+}
+
+.action-btn {
+    width: 100%;
+    padding: 12px;
+    background: var(--royal-green);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 15px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(11, 77, 58, 0.2);
+    margin-top: 15px;
+}
+
+.plan-card.popular .action-btn {
+    background: linear-gradient(135deg, #ff416c, #ff4b2b);
+    box-shadow: 0 4px 10px rgba(255, 75, 43, 0.3);
+}
+
+.action-btn:hover {
+    opacity: 0.9;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+    <a href="index.html" class="back-btn">⬅ Back to Home</a>
+    
+    <div class="header">
+        <h1>Green Angan Advice Clubs 👑</h1>
+        <p class="subtitle">Apni zaroorat ke hisab se sahi advice plan chunein aur organic farming seekhein!</p>
+    </div>
+
+    <div class="plans-grid">
+        
+        <!-- PLAN 1: BASIC ADVICE -->
+        <div class="plan-card">
+            <div>
+                <h3>Basic Advice Club</h3>
+                <p style="font-size: 12px; color:#718096;">Beginners ke liye best</p>
+                <div class="price">₹399 <span>₹199</span></div>
+                <p class="duration">Valid for 1 Month</p>
+                <ul class="benefits">
+                    <li><span class="check-icon">✓</span> <b>Chat Guid:</b> Hfte me 2 baar chat par advice.</li>
+                    <li><span class="check-icon">✓</span> <b>Basic Tips:</b> Khaat aur mitti taiyar karne ki tips.</li>
+                    <li><span class="check-icon">✓</span> Flat 10% Extra Discount on Seeds.</li>
+                </ul>
+            </div>
+            <button class="action-btn" onclick="payWithRazorpay('Basic Advice Club', 399)">Activate Basic</button>
+        </div>
+
+        <!-- PLAN 2: STANDARD EXPERT ADVICE (POPULAR) -->
+        <div class="plan-card popular">
+            <span class="badge">MOST POPULAR</span>
+            <div>
+                <h3>Standard Expert Club</h3>
+                <p style="font-size: 12px; color:#718096;">Ghar par kheti karne waalo ke liye</p>
+                <div class="price">₹899 <span>₹399</span></div>
+                <p class="duration">Valid for 6 Months</p>
+                <ul class="benefits">
+                    <li><span class="check-icon">✓</span> <b>Call + Chat Advice:</b> Jab zaroorat ho expert advice.</li>
+                    <li><span class="check-icon">✓</span> <b>Pest Control:</b>Keetanu aur bimariyo se bachne ka tareeka.</li>
+                    <li><span class="check-icon">✓</span> Flat 50% OFF on First 5 Orders.</li>
+                    <li><span class="check-icon">✓</span> Free Delivery on all Organic items.</li>
+                </ul>
+            </div>
+            <button class="action-btn" onclick="payWithRazorpay('Standard Expert Club', 899)">Activate Standard</button>
+        </div>
+
+        <!-- PLAN 3: PREMIUM GURU ADVICE -->
+        <div class="plan-card">
+            <div>
+                <h3>Premium Personal Guru</h3>
+                <p style="font-size: 12px; color:#718096;">Personalized VIP Care</p>
+                <div class="price">₹1499 <span>₹1499</span></div>
+                <p class="duration">Valid for 12 Months</p>
+                <ul class="benefits">
+                    <li><span class="check-icon">✓</span> <b>Video Call Advice:</b> Expert aapke paudhe video call par dekhega.</li>
+                    <li><span class="check-icon">✓</span> <b>Custom Soil Kit:</b> Aapki mitti ke hisab se special schedule.</li>
+                    <li><span class="check-icon">✓</span> 24/7 VIP Priority Support on WhatsApp.</li>
+                    <li><span class="check-icon">✓</span> Free Gifts & Samples har mahine order ke sath.</li>
+                </ul>
+            </div>
+            <button class="action-btn" onclick="payWithRazorpay('Premium Personal Guru', 1499)">Activate VIP Guru</button>
+        </div>
+
+    </div>
+</div>
+
+<!-- RAZORPAY SDK INTEGRATION -->
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<script>
+function payWithRazorpay(planName, price) {
+    // 🔔 AAPKI TESTING API KEY INTEGRATE KAR DI HAI
+    const RAZORPAY_KEY_ID = "rzp_live_T6yhVp368wh7UcuBlDHCz2BPiYb4ly6aacUqyO"; 
+
+    var options = {
+        "key": RAZORPAY_KEY_ID, 
+        "amount": price * 100, // Razorpay paise me value leta hai (₹1 = 100 Paise)
+        "currency": "INR",
+        "name": "Green Angan",
+        "description": "Subscription Plan: " + planName,
+        "image": "Logo.png", 
+        "handler": function (response){
+            // Successful Payment hone par yeh automatic trigger hoga
+            alert("🎉 Payment Successful!\nPayment ID: " + response.razorpay_payment_id + "\nWelcome to " + planName + "!");
+            window.location.href = "index.html"; // Success ke baad home page pe redirect
+        },
+        "prefill": {
+            "name": "Customer Name",
+            "email": "greenangan@gmail.com",
+            "contact": "9996656004"
+        },
+        "theme": {
+            "color": "#0b4d3a" // Green Angan brand color
+        }
+    };
+
+    var rzp1 = new Razorpay(options);
+    
+    rzp1.on('payment.failed', function (response){
+        alert("❌ Payment Failed! Reason: " + response.error.description);
+    });
+
+    rzp1.open();
+}
+</script>
+
+</body>
+</html>
