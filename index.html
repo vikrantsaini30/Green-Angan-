@@ -27,6 +27,7 @@ body{ background: var(--bg-light); color: var(--text-dark); padding-bottom: 80px
     box-shadow: 0 2px 10px rgba(0,0,0,0.06); 
     padding: 12px 15px;
 }
+
 .nav-top {
     display: flex;
     align-items: center;
@@ -55,7 +56,7 @@ body{ background: var(--bg-light); color: var(--text-dark); padding-bottom: 80px
 .user-profile-area {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 12px;
 }
 .user-badge {
     background: #eefaf4;
@@ -144,6 +145,63 @@ body{ background: var(--bg-light); color: var(--text-dark); padding-bottom: 80px
 .toggle-link { color: #0066c0; cursor: pointer; font-size: 13px; margin-top: 10px; display: inline-block; font-weight: 600; }
 .toggle-link:hover { text-decoration: underline; }
 .close-modal { position: absolute; right: 16px; top: 12px; font-size: 22px; cursor: pointer; color: #a0aec0; font-weight: bold; }
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+.nav-links span.shop-link { cursor: pointer; font-weight: 700; font-size: 14px; color: var(--light-green); }
+
+/* SUBSCRIPTION BUTTON STYLE */
+.sub-wrapper {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.subscribe-btn {
+    display: inline-block !important;
+    padding: 6px 14px !important; 
+    background: linear-gradient(135deg, #ff416c, #ff4b2b) !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 30px !important;
+    font-weight: 700 !important;
+    font-size: 13px !important;
+    cursor: pointer !important;
+    box-shadow: 0 4px 10px rgba(255, 75, 43, 0.3) !important;
+    transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+    text-decoration: none !important; 
+}
+
+.subscribe-btn:hover {
+    transform: scale(1.05) !important;
+    box-shadow: 0 6px 15px rgba(255, 75, 43, 0.5) !important;
+}
+
+.offer-badge {
+    position: absolute !important;
+    top: -12px !important;
+    right: 10px !important;
+    background-color: #ffd700 !important;
+    color: #000 !important;
+    font-size: 8px !important;
+    font-weight: 900 !important;
+    padding: 1px 6px !important;
+    border-radius: 10px !important;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2) !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+    border: 1px solid #fff !important;
+    z-index: 99 !important;
+    animation: offer-pulse 1.5s infinite !important;
+}
+
+@keyframes offer-pulse {
+    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.7); }
+    70% { transform: scale(1.1); box-shadow: 0 0 0 8px rgba(255, 215, 0, 0); }
+    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 215, 0, 0); }
+}
 
 /* Category Quick Links */
 .categories-tabs {
@@ -163,6 +221,12 @@ body{ background: var(--bg-light); color: var(--text-dark); padding-bottom: 80px
     font-size: 13px;
     font-weight: 600;
     color: var(--royal-green);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.cat-tab.active {
+    background: var(--royal-green);
+    color: white;
 }
 
 /* Premium Offer Banner */
@@ -179,7 +243,7 @@ body{ background: var(--bg-light); color: var(--text-dark); padding-bottom: 80px
 .promo-banner h2 { font-size: 20px; margin-bottom: 5px; color: #ffc107; }
 .promo-banner p { font-size: 13px; opacity: 0.9; }
 
-/* Meesho Grid Layout */
+/* Grid Layout */
 .products { 
     display: grid; 
     grid-template-columns: repeat(2, 1fr); 
@@ -243,7 +307,6 @@ body{ background: var(--bg-light); color: var(--text-dark); padding-bottom: 80px
 }
 .stock-info { font-size: 11px; color: #e53e3e; margin-bottom: 8px; font-weight: 600; }
 
-/* Buttons Container */
 .btn-container {
     display: flex;
     flex-direction: column;
@@ -261,7 +324,18 @@ body{ background: var(--bg-light); color: var(--text-dark); padding-bottom: 80px
     font-weight: 700; 
     font-size: 13px;
 }
-/* angan Style Order Button */
+
+.card .subscribe-btn {
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: white;
+    font-size: 12px;
+    border: 1px solid #047857;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+}
+.card .subscribe-btn:hover {
+    background: linear-gradient(135deg, #059669, #047857);
+}
+
 .angan-buy-btn {
     background: linear-gradient(to bottom, #ffe043, var(--angan-yellow)) !important;
     color: #111 !important;
@@ -293,7 +367,7 @@ body{ background: var(--bg-light); color: var(--text-dark); padding-bottom: 80px
 .nav-item.active { color: var(--royal-green); }
 .nav-icon { font-size: 20px; margin-bottom: 2px; }
 
-/* angan Style Sticky Cart Popup */
+/* Sticky Cart Popup */
 .angan-popup-bar {
     position: fixed;
     bottom: 60px; left: 0; right: 0;
@@ -339,39 +413,36 @@ footer { text-align: center; padding: 20px; color: #718096; font-size: 12px; bac
 </head>
 <body>
 
-<!-- Top Navbar Area -->
 <div class="navbar">
     <div class="nav-top">
         <div class="logo-container">
             <img src="Logo.png" alt="Green Angan Logo" class="logo-img">
             <span class="brand-name">Green Angan</span>
         </div>
-        <!-- 👤 User Dynamic Login Indicator Area -->
+        
         <div class="user-profile-area" id="userProfileArea"></div>
     </div>
+    
     <div class="search-box">
         <input type="text" id="searchInput" placeholder="Search Organic Products..." onkeyup="searchProducts()">
         <button onclick="searchProducts()">Search</button>
     </div>
 </div>
 
-<!-- angan Style Login/Register Modal Pop-up (Forgot Password Added) -->
 <div id="customerLoginModal" class="login-modal">
     <div class="login-content">
-        <span class="close-modal" onclick="closeLoginModal()">&times;</span>
+        <span class="close-modal" onclick="closeLoginModal()">×</span>
         <h3 id="modalTitle">Login to Green Angan</h3>
         
         <input type="text" id="custName" placeholder="Your Full Name" style="display: none;">
         <input type="tel" id="custPhone" placeholder="Mobile Number">
         <input type="password" id="custPass" placeholder="Password">
         
-        <!-- OTP Box Input Field -->
         <div id="otpSection" style="display: none; margin: 10px 0;">
             <p style="font-size: 12px; color: #718096; margin-bottom: 5px;">Enter the 4-Digit OTP shown on screen</p>
             <input type="number" id="custOtp" placeholder="Enter 4-Digit OTP">
         </div>
 
-        <!-- New Password Input Field -->
         <input type="password" id="custNewPass" placeholder="Enter New Password" style="display: none;">
         
         <button id="authBtn" onclick="handleAuth()">Continue</button>
@@ -383,32 +454,27 @@ footer { text-align: center; padding: 20px; color: #718096; font-size: 12px; bac
     </div>
 </div>
 
-<!-- Category Tabs -->
-<div class="categories-tabs">
-    <div class="cat-tab" style="background: var(--royal-green); color: white;">All Items</div>
-    <div class="cat-tab">Seeds</div>
-    <div class="cat-tab">Organic Wheat</div>
-    <div class="cat-tab">Fertilizers</div>
-    <div class="cat-tab">Honey</div>
+<div class="categories-tabs" id="categoryTabsContainer">
+    <div class="cat-tab active" onclick="filterByCategory('All Items', this)">All Items</div>
+    <div class="cat-tab" onclick="filterByCategory('Seeds', this)">Seeds</div>
+    <div class="cat-tab" onclick="filterByCategory('Organic Wheat', this)">Organic Wheat</div>
+    <div class="cat-tab" onclick="filterByCategory('Fertilizers', this)">Fertilizers</div>
+    <div class="cat-tab" onclick="filterByCategory('Honey', this)">Honey</div>
 </div>
 
-<!-- Promo Banner -->
 <div class="promo-banner">
     <h2>Lowest Prices & Best Quality</h2>
     <p>🚚 Free Delivery on First Order</p>
     <p>⭐ 100% Secure </p>
 </div>
 
-<!-- Product Showcase Grid -->
 <div class="products" id="productsContainer"></div>
 
-<!-- angan Style Instant Bottom Notification Bar -->
 <div class="angan-popup-bar" id="anganPopup">
     <div class="popup-left">Added! Total (<span id="popupCount">0</span> items): <span>₹<span id="popupTotal">0</span></span></div>
     <button class="popup-right-btn" onclick="directCheckout()">Proceed to Buy</button>
 </div>
 
-<!-- Shopping Cart Panel -->
 <div class="payment-section" id="cartSection">
     <h2>🛒 Your Cart Details</h2>
     <div id="cartItems"><p style="color:#a0aec0; text-align:center;">No products added yet.</p></div>
@@ -423,17 +489,15 @@ footer { text-align: center; padding: 20px; color: #718096; font-size: 12px; bac
     <button class="pay-btn" onclick="payNow()">Proceed to Checkout</button>
 </div>
 
-<!-- Google Map Location Info -->
 <div class="location-box">
     <h2>📍 Store Location</h2>
-    <iframe src="https://www.google.com/maps?q=haryana,baragoan&output=embed" width="100%" height="220" style="border:0;border-radius:8px;" loading="lazy"></iframe>
+    <iframe src="https://maps.google.com/maps?q=Baragaon,Haryana&t=&z=13&ie=UTF8&iwloc=&output=embed" width="100%" height="220" style="border:0;border-radius:8px;" loading="lazy"></iframe>
     <p style="margin-top:12px; font-weight:600; font-size:14px;">Haryana, Baragoan, 132023</p>
     <p style="font-size:12px; color:#718096; margin-top:4px;">📞 +91 99966 56004 | ✉ greenangan@gmail.com</p>
 </div>
 
-<!-- Sticky Bottom App Bar -->
 <div class="bottom-nav">
-    <div class="nav-item active" onclick="window.location.href='index.html'">
+    <div class="nav-item active" onclick="window.location.reload()">
         <span class="nav-icon">🏠</span>
         <span>Home</span>
     </div>
@@ -451,20 +515,20 @@ footer { text-align: center; padding: 20px; color: #718096; font-size: 12px; bac
     </div>
 </div>
 
-<!-- WhatsApp Chat Float Button -->
 <a href="https://wa.me/919996656004" target="_blank" style="position:fixed; bottom:130px; right:20px; background:#25D366; color:white; padding:14px; border-radius:50%; font-size:22px; text-decoration:none; z-index:9999; box-shadow: 0 4px 10px rgba(0,0,0,0.15);">💬</a>
 
 <footer>© 2026 Green Angan | Where Homes Bloom with Life</footer>
 
+<!-- Razorpay Script Loaded -->
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script>
 const defaultProducts = [
-    { name: "Organic Wheat", price: 50, originalPrice: 80, stock: 100, image: "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=500" },
-    { name: "Organic Seeds", price: 120, originalPrice: 199, stock: 80, image: "https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=500" },
-    { name: "Organic Jaggery", price: 80, originalPrice: 120, stock: 60, image: "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?w=500" },
-    { name: "Pure Honey", price: 250, originalPrice: 399, stock: 40, image: "https://images.unsplash.com/photo-1587049352851-8d4e89133924?w=500" },
-    { name: "Vermicompost", price: 350, originalPrice: 499, stock: 30, image: "https://images.unsplash.com/photo-1592982537447-7440770cbfc9?w=500" },
-    { name: "Organic Fertilizer", price: 450, originalPrice: 650, stock: 25, image: "https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?w=500" }
+    { name: "Organic Wheat", category: "Organic Wheat", price: 50, originalPrice: 80, stock: 100, image: "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=500" },
+    { name: "Organic Seeds", category: "Seeds", price: 120, originalPrice: 199, stock: 80, image: "https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=500" },
+    { name: "Organic Jaggery", category: "All Items", price: 80, originalPrice: 120, stock: 60, image: "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?w=500" },
+    { name: "Pure Honey", category: "Honey", price: 250, originalPrice: 399, stock: 40, image: "https://images.unsplash.com/photo-1587049352851-8d4e89133924?w=500" },
+    { name: "Vermicompost", category: "Fertilizers", price: 350, originalPrice: 499, stock: 30, image: "https://images.unsplash.com/photo-1592982537447-7440770cbfc9?w=500" },
+    { name: "Organic Fertilizer", category: "Fertilizers", price: 450, originalPrice: 650, stock: 25, image: "https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?w=500" }
 ];
 
 if(!localStorage.getItem("green_angan_products")) {
@@ -474,9 +538,9 @@ if(!localStorage.getItem("green_angan_products")) {
 let products = JSON.parse(localStorage.getItem("green_angan_products"));
 let cart = [];
 let total = 0;
+let selectedCategory = "All Items";
 
-// Forgot Password के लिए नए स्टेट वेरिएबल्स
-let currentAuthMode = "login"; // login, signup, forgot, verify_otp, reset_password
+let currentAuthMode = "login"; 
 let generatedOtp = null;
 let phoneToReset = null;
 
@@ -489,12 +553,26 @@ function checkCustomerLogin() {
     let currentCustomer = JSON.parse(localStorage.getItem("current_green_angan_customer"));
     let userArea = document.getElementById("userProfileArea");
     
+    let subBtnHtml = `
+        <div class="sub-wrapper">
+            <span class="offer-badge">50% OFF</span>
+            <a href="subscription.html" class="subscribe-btn">Subscription 👑</a>
+        </div>
+    `;
+    
     if (currentCustomer) {
-        userArea.innerHTML = `<span class="user-badge">👤 Hi, ${currentCustomer.name.split(' ')[0]}</span><span onclick="logoutCustomer()" class="logout-link">Logout</span>`;
+        userArea.innerHTML = `
+            ${subBtnHtml}
+            <span class="user-badge">👤 Hi, ${currentCustomer.name.split(' ')[0]}</span>
+            <span onclick="logoutCustomer()" class="logout-link">Logout</span>
+        `;
         if(document.getElementById("customerName")) document.getElementById("customerName").value = currentCustomer.name;
         if(document.getElementById("customerPhone")) document.getElementById("customerPhone").value = currentCustomer.phone;
     } else {
-        userArea.innerHTML = `<button onclick="openLoginModal()" class="login-btn-nav">Login</button>`;
+        userArea.innerHTML = `
+            ${subBtnHtml}
+            <button onclick="openLoginModal()" class="login-btn-nav">Login</button>
+        `;
     }
 }
 
@@ -504,7 +582,6 @@ function openLoginModal() {
 }
 function closeLoginModal() { document.getElementById("customerLoginModal").style.display = "none"; }
 
-// मोडल की सभी फील्ड्स को रिसेट करने का फंक्शन
 function resetAuthModal() {
     currentAuthMode = "login";
     document.getElementById("modalTitle").innerText = "Login to Green Angan";
@@ -542,7 +619,6 @@ function toggleAuthMode() {
     }
 }
 
-// 1. Forgot Password मोड चालू करने का फंक्शन
 function enableForgotPasswordMode() {
     currentAuthMode = "forgot";
     document.getElementById("modalTitle").innerText = "Reset Password";
@@ -556,12 +632,10 @@ function enableForgotPasswordMode() {
     document.getElementById("forgotPassLink").style.display = "none";
 }
 
-// 2. मुख्य ऑथेंटिकेशन और OTP मैनेजमेंट लॉजिक
 function handleAuth() {
     let phone = document.getElementById("custPhone").value.trim();
     let allUsers = JSON.parse(localStorage.getItem("green_angan_users")) || {};
 
-    // --- MODE 1: LOGIN ---
     if (currentAuthMode === "login") {
         let pass = document.getElementById("custPass").value.trim();
         if(!phone || !pass) { alert("Please fill all required fields."); return; }
@@ -575,8 +649,6 @@ function handleAuth() {
             alert("❌ Invalid Mobile Number or Password!");
         }
     } 
-    
-    // --- MODE 2: SIGNUP ---
     else if (currentAuthMode === "signup") {
         let pass = document.getElementById("custPass").value.trim();
         let name = document.getElementById("custName").value.trim();
@@ -590,8 +662,6 @@ function handleAuth() {
         closeLoginModal();
         checkCustomerLogin();
     } 
-    
-    // --- MODE 3: FORGOT (OTP जनरेट करें) ---
     else if (currentAuthMode === "forgot") {
         if(!phone) { alert("Please enter your Mobile Number."); return; }
         if(!allUsers[phone]) { alert("❌ This Mobile Number is not registered!"); return; }
@@ -607,8 +677,6 @@ function handleAuth() {
         document.getElementById("otpSection").style.display = "block"; 
         document.getElementById("authBtn").innerText = "Verify OTP";
     } 
-    
-    // --- MODE 4: VERIFY OTP ---
     else if (currentAuthMode === "verify_otp") {
         let userOtp = document.getElementById("custOtp").value.trim();
         if(!userOtp) { alert("Please enter the OTP."); return; }
@@ -625,8 +693,6 @@ function handleAuth() {
             alert("❌ Invalid OTP! Please check the code again.");
         }
     }
-    
-    // --- MODE 5: RESET NEW PASSWORD ---
     else if (currentAuthMode === "reset_password") {
         let newPass = document.getElementById("custNewPass").value.trim();
         if(!newPass) { alert("Please enter a new password."); return; }
@@ -634,7 +700,6 @@ function handleAuth() {
         
         allUsers[phoneToReset].password = newPass;
         localStorage.setItem("green_angan_users", JSON.stringify(allUsers));
-        
         localStorage.setItem("current_green_angan_customer", JSON.stringify(allUsers[phoneToReset]));
         
         alert("🎉 Password Updated & Logged In Successfully!");
@@ -649,11 +714,24 @@ function logoutCustomer() {
     location.reload();
 }
 
-function renderProducts() {
-    products = JSON.parse(localStorage.getItem("green_angan_products")) || defaultProducts;
+function filterByCategory(categoryName, element) {
+    selectedCategory = categoryName;
+    document.querySelectorAll('.cat-tab').forEach(tab => tab.classList.remove('active'));
+    element.classList.add('active');
+    renderProducts();
+}
+
+function renderProducts(filteredProducts = null) {
+    let currentProductsList = filteredProducts || JSON.parse(localStorage.getItem("green_angan_products")) || defaultProducts;
     let container = document.getElementById("productsContainer");
     let html = "";
-    products.forEach((product, index) => {
+    
+    currentProductsList.forEach((product) => {
+        if(!filteredProducts && selectedCategory !== "All Items" && product.category !== selectedCategory) {
+            return; 
+        }
+
+        let originalIndex = products.findIndex(p => p.name === product.name);
         let origPrice = product.originalPrice || Math.round(product.price * 1.4);
         let discount = Math.round(((origPrice - product.price) / origPrice) * 100);
         let isInCart = cart.find(item => item.name === product.name);
@@ -675,7 +753,8 @@ function renderProducts() {
                 <div class="btn-container">
                 ${product.stock > 0 ? 
                     `<div class="stock-info" style="color: #38a169; margin-bottom:2px;">In Stock: ${product.stock}</div>
-                     <button onclick="addToCart(${index})">Add To Cart</button>
+                     <button onclick="addToCart(${originalIndex})">Add To Cart</button>
+                     <button class="subscribe-btn" onclick="subscribeAndSave(${originalIndex})">🔄 Subscribe & Save 10%</button>
                      ${isInCart ? `<button class="angan-buy-btn" onclick="directCheckout()">Proceed to Buy</button>` : ''}` : 
                     `<div class="stock-info">Out Of Stock</div>
                      <button class="out-of-stock" disabled>Out Of Stock</button>`
@@ -685,6 +764,30 @@ function renderProducts() {
         </div>`;
     });
     container.innerHTML = html;
+}
+
+function subscribeAndSave(index) {
+    let product = products[index];
+    if (product.stock <= 0) { alert("Out Of Stock"); return; }
+    
+    let subscriptionPrice = Math.round(product.price * 0.9); 
+    product.stock--;
+    localStorage.setItem("green_angan_products", JSON.stringify(products));
+
+    let subscriptionName = `🔁 [Monthly Sub] ${product.name}`;
+    let existingItem = cart.find(item => item.name === subscriptionName);
+    
+    if (existingItem) {
+        existingItem.qty++;
+    } else {
+        cart.push({ name: subscriptionName, price: subscriptionPrice, qty: 1 });
+    }
+    total += subscriptionPrice;
+    
+    updateCart();
+    renderProducts();
+    showanganPopup();
+    alert(`🎉 Subscribed to ${product.name}! You saved 10% extra. Product added to cart.`);
 }
 
 function addToCart(index) {
@@ -732,29 +835,36 @@ function showanganPopup() {
 function directCheckout() {
     let currentCustomer = JSON.parse(localStorage.getItem("current_green_angan_customer"));
     if (!currentCustomer) {
-        alert("🔒 angan Security: Please Login or Register first to buy products!");
+        alert("🔒 Security: Please Login or Register first to buy products!");
         openLoginModal();
         return;
     }
     let cartSection = document.getElementById("cartSection");
     cartSection.style.display = "block";
-    cartSection.scrollIntoView({ behavior: "smooth" });
-    checkCustomerLogin();
+    cartSection.scrollIntoView({ behavior: 'smooth' });
 }
 
 function openCart() {
     let cartSection = document.getElementById("cartSection");
-    cartSection.style.display = (cartSection.style.display === "none" || cartSection.style.display === "") ? "block" : "none";
-    if(cartSection.style.display === "block") {
-        directCheckout();
-    }
+    cartSection.style.display = "block";
+    cartSection.scrollIntoView({ behavior: 'smooth' });
 }
 
+/* 🔍 SEARCH PRODUCTS LOGIC FIXED & COMPLETED */
+function searchProducts() {
+    let query = document.getElementById("searchInput").value.toLowerCase().trim();
+    if(query === "") {
+        renderProducts();
+        return;
+    }
+    let filtered = products.filter(p => p.name.toLowerCase().includes(query) || p.category.toLowerCase().includes(query));
+    renderProducts(filtered);
+}
+
+/* 💳 RAZORPAY REAL LIVE INTEGRATION COMPLETED */
 function payNow() {
-    let currentCustomer = JSON.parse(localStorage.getItem("current_green_angan_customer"));
-    if (!currentCustomer) {
-        alert("Please login first.");
-        openLoginModal();
+    if(cart.length === 0) {
+        alert("Your cart is empty!");
         return;
     }
 
@@ -762,54 +872,65 @@ function payNow() {
     let phone = document.getElementById("customerPhone").value.trim();
     let address = document.getElementById("customerAddress").value.trim();
 
-    if(name === "" || phone === "" || address === ""){ alert("Please fill complete details."); return; }
-    if (total === 0) { alert("Cart is empty."); return; }
+    if(!name || !phone || !address) {
+        alert("Please fill all delivery details before paying.");
+        return;
+    }
+
+    // Fixed Real/Live Key integration
+    const RAZORPAY_KEY_ID = "rzp_live_T6yhVp368wh7UcuBlDHCz2BPiYb4ly6aacUqyO"; 
 
     var options = {
-        key: "rzp_live_T6yhVp368wh7UcuBlDHCz2BPiYb4ly6aacUqyO
-",
-        amount: total * 100,
-        currency: "INR",
-        name: "Green Angan",
-        description: "Order Payment",
-        handler: function(response){
-            let itemsDetails = cart.map(item => `${item.name} [Qty: ${item.qty}] (₹${item.price}/each)`).join(", ");
-
-            let orderData = {
-                orderId: "GA-" + Math.floor(100000 + Math.random() * 900000),
-                customerName: name,
-                customerPhone: phone,
-                customerAddress: address,
-                items: itemsDetails,
+        "key": RAZORPAY_KEY_ID,      
+        "amount": Math.round(total * 100), // Secure conversion to paise
+        "currency": "INR",
+        "name": "Green Angan",
+        "description": "Purchase Organic Products",
+        "image": "Logo.png", 
+        "handler": function (response){
+            alert("🎉 Payment Successful!\nPayment ID: " + response.razorpay_payment_id);
+            
+            // Handle Order Processing after successful payment
+            let existingOrders = JSON.parse(localStorage.getItem("green_angan_orders")) || [];
+            let newOrder = {
+                orderId: response.razorpay_payment_id,
+                customer: { name: name, phone: phone, address: address },
+                items: cart,
                 totalAmount: total,
-                paymentId: response.razorpay_payment_id,
-                status: "Order Placed / Processing",
                 date: new Date().toLocaleString()
             };
-
-            let existingOrders = JSON.parse(localStorage.getItem("green_angan_orders")) || [];
-            existingOrders.unshift(orderData);
+            existingOrders.push(newOrder);
             localStorage.setItem("green_angan_orders", JSON.stringify(existingOrders));
 
-            cart = []; total = 0; updateCart();
-            document.getElementById("customerAddress").value = "";
-            document.getElementById("cartSection").style.display = "none";
-            document.getElementById("anganPopup").style.display = "none";
+            // Clear Cart and update UI
+            cart = [];
+            total = 0;
+            updateCart();
             renderProducts();
-            alert("Order Success! Tracking updated.");
-            window.location.href = "order.html";
+            document.getElementById("anganPopup").style.display = "none";
+            document.getElementById("cartSection").style.display = "none";
+            
+            window.location.href = "order.html"; 
         },
-        theme: { color: "#0b4d3a" }
+        "prefill": {
+            "name": name,
+            "email": "greenangan@gmail.com",
+            "contact": phone
+        },
+        "theme": {
+            "color": "#0b4d3a" 
+        }
     };
-    new Razorpay(options).open();
-}
 
-function searchProducts() {
-    let input = document.getElementById("searchInput").value.toLowerCase().trim();
-    document.querySelectorAll(".card").forEach(card => {
-        let name = card.querySelector("h3").textContent.toLowerCase();
-        card.style.display = name.includes(input) ? "" : "none";
-    });
+    try {
+        var rzp1 = new Razorpay(options);
+        rzp1.on('payment.failed', function (response){
+            alert("❌ Payment Failed! Reason: " + response.error.description);
+        });
+        rzp1.open();
+    } catch (error) {
+        alert("Razorpay setup error: " + error.message);
+    }
 }
 </script>
 </body>
